@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import config from './config.js'
 import './App.css';
 import MapComponent from './MapComponent'
 import { GoogleApiWrapper } from 'google-maps-react';
@@ -22,5 +23,5 @@ class App extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyBRP9rsHODvbIvhyPNcege9fBqn27l9Aco")
+  apiKey: (config.MY_KEY)
 })(App)
