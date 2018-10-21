@@ -37,11 +37,15 @@ class MapComponent extends Component {
       zoom: 13,
       mapTypeId: 'hybrid'
     }))
+    let {infowindow} = this.state
     this.state.locations.forEach((location) => {
       const marker = new google.maps.Marker({
         position: {lat: location.location.lat, lng: location.location.lng},
         map: this.map,
         title: location.name
+      })
+      marker.addListener('click', () => {
+        this.createInfoWindow(marker, infowindow)
       })
       this.setState((state) => ({
         markers: [...state.markers, marker]
