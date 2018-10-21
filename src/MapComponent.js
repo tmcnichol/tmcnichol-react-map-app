@@ -21,7 +21,7 @@ class MapComponent extends Component {
       {name: "Valmont Disc Golf", location: {lat: 40.028356, lng: -105.237393}}
     ],
     markers: [],
-    infowindow: new this.props.google.maps.InfoWindow()
+    infowindow: new this.props.google.maps.InfoWindow(),
   }
 
   componentDidMount() {
@@ -42,10 +42,18 @@ class MapComponent extends Component {
       const marker = new google.maps.Marker({
         position: {lat: location.location.lat, lng: location.location.lng},
         map: this.map,
+        animation: google.maps.Animation.DROP,
         title: location.name
       })
       marker.addListener('click', () => {
         this.createInfoWindow(marker, infowindow)
+      })
+      marker.addListener('click', () => {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
       })
       this.setState((state) => ({
         markers: [...state.markers, marker]
@@ -79,9 +87,11 @@ class MapComponent extends Component {
       infowindow.open(this.map, marker)
       infowindow.addListener('closeclick', function () {
         infowindow.marker = null
+        marker.setAnimation(null)
       })
     }
   }
+
 
   render() {
     const {locations, markers} = this.state
