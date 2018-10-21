@@ -3,19 +3,15 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 20vmin;
+  animation: App-logo-spin infinite 8s linear;
+  height: 45px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 40vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #000;
+  height: 110px;
+  padding: 10px;
+  color: #f5f5f5;
 }
 
 .App-link {
@@ -42,6 +38,18 @@
   flex-wrap: wrap;
 }
 
+.locations-list {
+  width: 13%;
+}
+
 ul {
   list-style: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 0;
+}
+
+li {
+  line-height: 60px;
+  text-decoration: none;
 }
