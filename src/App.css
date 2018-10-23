@@ -28,7 +28,7 @@
 }
 
 .map {
-  width: 87%;
+  width: 81%;
   height: auto;
   margin: 0;
 }
@@ -39,7 +39,8 @@
 }
 
 .locations-list {
-  width: 13%;
+  width: 19%;
+  min-width: 100px;
 }
 
 ul {
@@ -52,4 +53,74 @@ ul {
 li {
   line-height: 60px;
   text-decoration: none;
+}
+
+@media screen and (max-width:800px) {
+  .map {
+    width: 78%;
+  }
+
+  .locations-list {
+    width: 22%;
+  }
+}
+
+@media screen and (max-width:684px) {
+  .map {
+    width: 75%;
+  }
+
+  .locations-list {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width:602px) {
+  .map {
+    width: 72%;
+  }
+
+  .locations-list {
+    width: 28%;
+  }
+}
+
+@media screen and (max-width:538px) {
+  .map {
+    width: 67%;
+  }
+
+  .locations-list {
+    width: 33%;
+  }
+}
+
+@media screen and (max-width:456px) {
+  .map {
+    width: 63%;
+  }
+
+  .locations-list {
+    width: 37%;
+  }
+}
+
+@media screen and (max-width:407px) {
+  .map {
+    width: 57%;
+  }
+
+  .locations-list {
+    width: 43%;
+  }
+}
+
+@media screen and (max-width:377px) {
+  .map {
+    width: 52%;
+  }
+
+  .locations-list {
+    width: 48%;
+  }
 }

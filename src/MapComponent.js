@@ -34,7 +34,7 @@ class MapComponent extends Component {
     const bounds = new google.maps.LatLngBounds() //builder to create a min bound based on set of LatLng points
     this.map = new google.maps.Map(ReactDOM.findDOMNode(this.refs.map), Object.assign({}, {
       center: {lat: 45.188529, lng: 5.724523999999974},
-      zoom: 13,
+      zoom: 15,
       mapTypeId: 'hybrid'
     }))
     let {infowindow} = this.state
