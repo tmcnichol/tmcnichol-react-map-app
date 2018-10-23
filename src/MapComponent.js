@@ -74,6 +74,11 @@ class MapComponent extends Component {
         showInfoWindow(event)
       }
     })
+    document.querySelector('.locations-list').addEventListener('keydown', function (event) {
+      if (event.keyCode === 13) {
+        showInfoWindow(event)
+      }
+    })
   }
 
   createInfoWindow = (marker, infowindow) => {
@@ -107,7 +112,7 @@ class MapComponent extends Component {
           <div className="locations-list">
             <ul className="locations">{
               markers.filter(marker => marker.getVisible()).map((marker, key) =>
-              (<li key={key}>{marker.title}</li>))
+              (<li key={key} tabIndex="3">{marker.title}</li>))
             }</ul>
           </div>
           <div role="application" className="map" ref="map"/>
