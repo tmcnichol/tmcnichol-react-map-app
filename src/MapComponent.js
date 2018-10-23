@@ -22,11 +22,19 @@ class MapComponent extends Component {
     ],
     markers: [],
     infowindow: new this.props.google.maps.InfoWindow(),
+    profiles: []
   }
 
   componentDidMount() {
-    this.initMap()
-    this.selectLocation()
+    fetch('https://randomuser.me/api/?results=13').then(data => {
+      if(data.ok) {
+        return data.json()
+      }
+    }).then(data => {
+      this.setState({profiles: data.results})
+      this.initMap()
+      this.selectLocation()
+    })
   }
 
   initMap() {
@@ -38,7 +46,9 @@ class MapComponent extends Component {
       mapTypeId: 'hybrid'
     }))
     let {infowindow} = this.state
-    this.state.locations.forEach((location) => {
+    const {profiles} = this.state
+
+    this.state.locations.forEach((location,pIndex) => {
       const marker = new google.maps.Marker({
         position: {lat: location.location.lat, lng: location.location.lng},
         map: this.map,
@@ -46,9 +56,7 @@ class MapComponent extends Component {
         title: location.name
       })
       marker.addListener('click', () => {
-        this.createInfoWindow(marker, infowindow)
-      })
-      marker.addListener('click', () => {
+        this.createInfoWindow(marker, infowindow, profiles[pIndex])
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
@@ -67,7 +75,7 @@ class MapComponent extends Component {
     const {infowindow} = this.state
     const showInfoWindow = (event) => {
       const {markers} = this.state
-      this.createInfoWindow(markers[markers.findIndex(marker => marker.title.toLowerCase() === event.target.innerText.toLowerCase())], infowindow)
+      this.createInfoWindow(markers[markers.findIndex(marker => marker.title.toLowerCase() === event.target.innerText.toLowerCase())], infowindow, this.state.profiles[markers.findIndex(marker => marker.title.toLowerCase() === event.target.innerText.toLowerCase())])
     }
     document.querySelector('.locations-list').addEventListener('click', function (event) {
       if (event.target && event.target.nodeName === 'LI') {
@@ -81,14 +89,17 @@ class MapComponent extends Component {
     })
   }
 
-  createInfoWindow = (marker, infowindow) => {
+  createInfoWindow = (marker, infowindow, profile) => {
     const {markers} = this.state
     if (infowindow.marker !== marker) {
       if (infowindow.marker) {
         markers[markers.findIndex(marker => marker.title === infowindow.marker.title)].setIcon(marker.getIcon())
       }
       infowindow.marker = marker
-      infowindow.setContent(`<h4>${marker.title}</h4>`)
+      infowindow.setContent(`<h3>${marker.title}</h3>
+        <h4>Local Guide</h4>
+        <img src="${profile.picture.large}" alt="local guide home">
+        <div>${profile.name.first} ${profile.name.last}</div>`)
       infowindow.open(this.map, marker)
       infowindow.addListener('closeclick', function () {
         infowindow.marker = null
