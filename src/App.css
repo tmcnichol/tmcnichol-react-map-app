@@ -28,9 +28,10 @@
 }
 
 .map {
-  width: 81%;
+  width: 85%;
   height: auto;
   margin: 0;
+  min-height: 568px;
 }
 
 .container {
@@ -39,7 +40,7 @@
 }
 
 .locations-list {
-  width: 19%;
+  width: 15%;
   min-width: 100px;
 }
 
@@ -53,6 +54,22 @@ ul {
 li {
   line-height: 60px;
   text-decoration: none;
+}
+
+input {
+  line-height: 40px;
+  text-decoration: none;
+  padding-left: 0;
+}
+
+@media screen and (max-width:1003px) {
+  .map {
+    width: 81%;
+  }
+
+  .locations-list {
+    width: 19%;
+  }
 }
 
 @media screen and (max-width:800px) {

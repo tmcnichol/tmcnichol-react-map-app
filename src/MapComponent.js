@@ -22,7 +22,8 @@ class MapComponent extends Component {
     ],
     markers: [],
     infowindow: new this.props.google.maps.InfoWindow(),
-    profiles: []
+    profiles: [],
+    search: ''
   }
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class MapComponent extends Component {
     this.map = new google.maps.Map(ReactDOM.findDOMNode(this.refs.map), Object.assign({}, {
       center: {lat: 45.188529, lng: 5.724523999999974},
       zoom: 15,
-      mapTypeId: 'hybrid'
+      mapTypeId: 'terrain'
     }))
     let {infowindow} = this.state
     const {profiles} = this.state
@@ -108,23 +109,40 @@ class MapComponent extends Component {
     }
   }
 
+  runSearch = (event) => {
+    this.setState({search: event.target.value})
+  }
 
   render() {
-    const {locations, markers} = this.state
-    locations.forEach((loc) => {
-      if (markers[loc]) {
-        markers[loc].setVisible(true)
+    const {locations, markers, search, infowindow} = this.state
+    if(search) {
+      locations.forEach((loc, idx) => {
+        if(loc.name.toLowerCase().includes(search.toLowerCase())) {
+          markers[idx].setVisible(true)
+        } else {
+          if(infowindow.markers === markers[idx]) {
+            infowindow.close()
+          }
+          markers[idx].setVisible(false)
+        }
+      })
+    }else {
+      locations.forEach((loc, idx) => {
+      if (markers[idx] && markers.length) {
+        markers[idx].setVisible(true)
       }
     })
+  }
 
     return (
       <div>
         <div className="container">
           <div className="locations-list">
-            <ul className="locations">{
-              markers.filter(marker => marker.getVisible()).map((marker, key) =>
-              (<li key={key} tabIndex="3">{marker.title}</li>))
-            }</ul>
+            <ul className="locations">
+              <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch}/>
+              {markers.filter(marker => marker.getVisible()).map((marker, key) =>
+              (<li key={key} tabIndex="3">{marker.title}</li>))}
+            </ul>
           </div>
           <div role="application" className="map" ref="map"/>
         </div>
