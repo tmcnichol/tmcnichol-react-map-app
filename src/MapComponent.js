@@ -109,7 +109,8 @@ class MapComponent extends Component {
       infowindow.setContent(`<h3 tabIndex="2">${marker.title}</h3>
         <h4>Local Guide</h4>
         <img src="${profile.picture.large}" alt="local guide image">
-        <div>${profile.name.first} ${profile.name.last}</div>`)
+        <div>${profile.name.first} ${profile.name.last}</div>
+        <div>${profile.email}</div>`)
       infowindow.open(this.map, marker)
       infowindow.marker.setAnimation(google.maps.Animation.BOUNCE)
       setTimeout( () => {infowindow.marker.setAnimation(null)}, 750)

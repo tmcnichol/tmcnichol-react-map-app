@@ -8,10 +8,10 @@ After cloning or forking this repository:
 
 * cd (change directory) into the project folder with `cd tmcnichol-react-map-app`
 * install all project dependencies with `npm install`
-* on the App.js file, line 26, replace `config.MY_KEY` with an google maps api hey: `'YOUR API KEY'`
+* on the App.js file, line 26, replace `config.MY_KEY` with a google maps api key: `'YOUR API KEY'`
 * start the development server with `npm start`
 
-Once the application is launched, simply click on the markers or the location names on the sidebar to see the "popup" infowindow containing a picture and name of the local guide.
+Once the application is launched, simply click on a marker or the location names on the left sidebar to see the "popup" infowindow containing a picture, name, and email of the local guide. To narrow your search, you can utilize the search bar at the top of the left sidebar.
 
 ## Attributions
 
