@@ -1,9 +1,26 @@
+# Boulder Local Guides
+
+This is my final project as part of Udacity's Front-End Nanodegree program. This react map app is a collection of a few of my favorite places in Boulder, each with an assigned local guide to help you get to know and enjoy their location in Boulder.
+
+## How it Works
+
+After cloning or forking this repository:
+
+* cd (change directory) into the project folder with `cd tmcnichol-react-map-app`
+* install all project dependencies with `npm install`
+* on the App.js file, line 26, replace `config.MY_KEY` with an google maps api hey: `'YOUR API KEY'`
+* start the development server with `npm start`
+
+Once the application is launched, simply click on the markers or the location names on the sidebar to see the "popup" infowindow containing a picture and name of the local guide.
+
+## Attributions
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-## Table of Contents
+### Table of Contents
 
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)

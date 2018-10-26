@@ -27,6 +27,7 @@ class MapComponent extends Component {
   }
 
   componentDidMount() {
+    //Randomuser API to populate Local Guides image & name
     fetch('https://randomuser.me/api/?results=13').then(data => {
       if(data.ok) {
         return data.json()
@@ -56,13 +57,9 @@ class MapComponent extends Component {
         animation: google.maps.Animation.DROP,
         title: location.name
       })
+      //click listener to "toggle-click" animate the marker with Google's BOUNCE
       marker.addListener('click', () => {
         this.createInfoWindow(marker, infowindow, profiles[pIndex])
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
       })
       this.setState((state) => ({
         markers: [...state.markers, marker]
@@ -81,30 +78,43 @@ class MapComponent extends Component {
     document.querySelector('.locations-list').addEventListener('click', function (event) {
       if (event.target && event.target.nodeName === 'LI') {
         showInfoWindow(event)
+        setTimeout( () => {
+          infowindow.marker.setAnimation(null)
+        }, 750)
       }
     })
     document.querySelector('.locations-list').addEventListener('keydown', function (event) {
       if (event.keyCode === 13) {
         showInfoWindow(event)
+        setTimeout( () => {
+          infowindow.marker.setAnimation(null)
+        }, 750)
+      }
+    })
+    document.querySelector('.locations-list').addEventListener('keydown', function (event) {
+      if (event.keyCode === 27) {
+        infowindow.close()
       }
     })
   }
 
   createInfoWindow = (marker, infowindow, profile) => {
     const {markers} = this.state
+    const {google} = this.props
     if (infowindow.marker !== marker) {
       if (infowindow.marker) {
         markers[markers.findIndex(marker => marker.title === infowindow.marker.title)].setIcon(marker.getIcon())
       }
       infowindow.marker = marker
-      infowindow.setContent(`<h3>${marker.title}</h3>
+      infowindow.setContent(`<h3 tabIndex="2">${marker.title}</h3>
         <h4>Local Guide</h4>
-        <img src="${profile.picture.large}" alt="local guide home">
+        <img src="${profile.picture.large}" alt="local guide image">
         <div>${profile.name.first} ${profile.name.last}</div>`)
       infowindow.open(this.map, marker)
+      infowindow.marker.setAnimation(google.maps.Animation.BOUNCE)
+      setTimeout( () => {infowindow.marker.setAnimation(null)}, 750)
       infowindow.addListener('closeclick', function () {
         infowindow.marker = null
-        marker.setAnimation(null)
       })
     }
   }
@@ -126,7 +136,7 @@ class MapComponent extends Component {
           markers[idx].setVisible(false)
         }
       })
-    }else {
+    } else {
       locations.forEach((loc, idx) => {
       if (markers[idx] && markers.length) {
         markers[idx].setVisible(true)
@@ -139,9 +149,9 @@ class MapComponent extends Component {
         <div className="container">
           <div className="locations-list">
             <ul className="locations">
-              <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch}/>
+              <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch} tabIndex="1"/>
               {markers.filter(marker => marker.getVisible()).map((marker, key) =>
-              (<li key={key} tabIndex="3">{marker.title}</li>))}
+              (<li key={key} tabIndex="2">{marker.title}</li>))}
             </ul>
           </div>
           <div role="application" className="map" ref="map"/>
