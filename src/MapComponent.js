@@ -23,7 +23,9 @@ class MapComponent extends Component {
     markers: [],
     infowindow: new this.props.google.maps.InfoWindow(),
     profiles: [],
-    search: ''
+    search: '',
+    error: null,
+    initMapError: null
   }
 
   componentDidMount() {
@@ -31,42 +33,284 @@ class MapComponent extends Component {
     fetch('https://randomuser.me/api/?results=13').then(data => {
       if(data.ok) {
         return data.json()
+      } else {
+        throw new Error(data.statusText)
       }
     }).then(data => {
       this.setState({profiles: data.results})
       this.initMap()
       this.selectLocation()
     })
+    .catch(e => {
+      this.setState({error: e.toString()})
+    })
   }
 
   initMap() {
-    const {google} = this.props
-    const bounds = new google.maps.LatLngBounds() //builder to create a min bound based on set of LatLng points
-    this.map = new google.maps.Map(ReactDOM.findDOMNode(this.refs.map), Object.assign({}, {
-      center: {lat: 45.188529, lng: 5.724523999999974},
-      zoom: 15,
-      mapTypeId: 'terrain'
-    }))
-    let {infowindow} = this.state
-    const {profiles} = this.state
-
-    this.state.locations.forEach((location,pIndex) => {
-      const marker = new google.maps.Marker({
-        position: {lat: location.location.lat, lng: location.location.lng},
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        title: location.name
-      })
-      //click listener to "toggle-click" animate the marker with Google's BOUNCE
-      marker.addListener('click', () => {
-        this.createInfoWindow(marker, infowindow, profiles[pIndex])
-      })
-      this.setState((state) => ({
-        markers: [...state.markers, marker]
+    if (this.props && this.props.google) {
+      const {google} = this.props
+      const bounds = new google.maps.LatLngBounds() //builder to create a min bound based on set of LatLng points
+      this.map = new google.maps.Map(ReactDOM.findDOMNode(this.refs.map), Object.assign({}, {
+        center: {lat: 45.188529, lng: 5.724523999999974},
+        zoom: 15,
+        mapTypeId: 'terrain',
+        styles: [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8ec3b9"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1a3646"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#64779e"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#334e87"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#6f9ba5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#3C7680"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#304a7d"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2c6675"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#255763"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#b0d5ce"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#3a4762"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#0e1626"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#4e6d70"
+      }
+    ]
+  }
+]
       }))
-      bounds.extend(marker.position)
-    })
-    this.map.fitBounds(bounds)
+      let {infowindow} = this.state
+      const {profiles} = this.state
+
+      this.state.locations.forEach((location,pIndex) => {
+        const marker = new google.maps.Marker({
+          position: {lat: location.location.lat, lng: location.location.lng},
+          map: this.map,
+          animation: google.maps.Animation.DROP,
+          title: location.name
+        })
+        //click listener to "toggle-click" animate the marker with Google's BOUNCE
+        marker.addListener('click', () => {
+          this.createInfoWindow(marker, infowindow, profiles[pIndex])
+        })
+        this.setState((state) => ({
+          markers: [...state.markers, marker]
+        }))
+        bounds.extend(marker.position)
+      })
+      this.map.fitBounds(bounds)
+    } else {
+      this.setState({initMapError: "We're sorry, but there was a problem loading the map. Please check to make sure your API key is valid and try loading the map again"})
+    }
   }
 
   selectLocation = () => {
@@ -117,6 +361,8 @@ class MapComponent extends Component {
       infowindow.addListener('closeclick', function () {
         infowindow.marker = null
       })
+    } else {
+      window.alert("We're sorry, no results can be displayed at this time.");
     }
   }
 
@@ -147,16 +393,24 @@ class MapComponent extends Component {
 
     return (
       <div>
-        <div className="container">
-          <div className="locations-list">
-            <ul className="locations">
-              <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch} tabIndex="1"/>
-              {markers.filter(marker => marker.getVisible()).map((marker, key) =>
-              (<li key={key} tabIndex="2">{marker.title}</li>))}
-            </ul>
-          </div>
-          <div role="application" className="map" ref="map"/>
-        </div>
+        {this.state.error ? (
+          <div className="error">
+            I'm sorry, but there seems to have been an error. Please reload the page. Thank you for your patience while we resolve this issue!
+            {this.state.error}
+          </div>):
+          (<div className="container">
+            <div className="locations-list">
+              <ul className="locations">
+                <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch} tabIndex="1"/>
+                {markers.filter(marker => marker.getVisible()).map((marker, key) =>
+                (<li key={key} tabIndex="2">{marker.title}</li>))}
+              </ul>
+            </div>
+            <div role="application" className="map" ref="map">
+            Diese wunderbare Karte wird geladen...(This wonderful map is loading ;))
+            {this.state.initMapError && <div className="error">{this.state.initMapError}</div>}
+            </div>
+          </div>)}
       </div>
     )
   }

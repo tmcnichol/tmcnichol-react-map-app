@@ -1,6 +1,6 @@
 # Boulder Local Guides
 
-This is my final project as part of Udacity's Front-End Nanodegree program. This react map app is a collection of a few of my favorite places in Boulder, each with an assigned local guide to help you get to know and enjoy their location in Boulder.
+This is my final project as part of Udacity's Front-End Nanodegree program. This react map app is a collection of a few of my favorite places in Boulder, each with an assigned local guide and contact info to help you get to know and enjoy their location in Boulder.
 
 ## How it Works
 
@@ -9,11 +9,21 @@ After cloning or forking this repository:
 * cd (change directory) into the project folder with `cd tmcnichol-react-map-app`
 * install all project dependencies with `npm install`
 * on the App.js file, line 26, replace `config.MY_KEY` with a google maps api key: `'YOUR API KEY'`
-* start the development server with `npm start`
+* To start the development server use the command: `npm start`
+* To start the production server and utilize the offline functionality of the app:
+  - use command: `npm run build`
+  - use command: `npm install -g serve` (if you haven't installed server.js for Node.js yet)
+  - use command: `serve -s build`
 
 Once the application is launched, simply click on a marker or the location names on the left sidebar to see the "popup" infowindow containing a picture, name, and email of the local guide. To narrow your search, you can utilize the search bar at the top of the left sidebar.
 
 ## Attributions
+
+In addition to the course materials from Udacity's React lessons, I drew inspiration and troubleshooting techniques from the following websites:
+- (https://cloud.google.com/maps-platform/) - Google Maps Platform Site
+- (https://randomuser.me/) - Random User API Site
+- (https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA) - Traversy Media Video Tutorials
+- (https://www.youtube.com/user/shiffman) - The Coding Train Video Tutorials
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
