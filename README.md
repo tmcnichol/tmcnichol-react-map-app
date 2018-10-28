@@ -1,6 +1,6 @@
 # Boulder Local Guides
 
-This is my final project as part of Udacity's Front-End Nanodegree program. This react map app is a collection of a few of my favorite places in Boulder, each with an assigned local guide and contact info to help you get to know and enjoy their location in Boulder.
+This is my final project as part of Udacity's Front-End Nanodegree program. This react map app utilizes Google Maps API to display a collection of my favorite places in Boulder, each with an assigned local guide and contact info (from (https://randomuser.me/) to help you get to know and enjoy each location.
 
 ## How it Works
 
