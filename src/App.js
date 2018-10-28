@@ -10,7 +10,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo1" alt="logo" />
+          <img src={logo} className="App-logo2" alt="logo" />
+          <img src={logo} className="App-logo3" alt="logo" />
           <h2 className="App-title">Boulder Local Guides</h2>
         </header>
         <main>

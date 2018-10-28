@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import locations from './locations.js';
+import myMapStyles from './myMapStyles.js';
 
 class MapComponent extends Component {
 
   state = {
-    locations: [
-      {name: "Google Boulder", location: {lat: 40.022227, lng: -105.254886}},
-      {name: "Boulder Library", location: {lat: 40.014166, lng: -105.281780}},
-      {name: "CU Boulder", location: {lat: 40.012438, lng: -105.270268}},
-      {name: "Boulder Theater", location: {lat: 40.019477, lng: -105.277287}},
-      {name: "BRC", location: {lat: 40.026080, lng: -105.256750}},
-      {name: "Yoga Pod", location: {lat: 40.020616, lng: -105.253073}},
-      {name: "Folsom Field", location: {lat: 40.009729, lng: -105.266926}},
-      {name: "Community Cycles", location: {lat: 40.025825, lng: -105.248474}},
-      {name: "Chautauqua", location: {lat: 39.999463, lng: -105.281478}},
-      {name: "Bartaco", location: {lat: 40.017378, lng: -105.282086}},
-      {name: "Sweet Cow", location: {lat: 40.025096, lng: -105.281170}},
-      {name: "Barnsley Tire", location: {lat: 40.022023, lng: -105.262315}},
-      {name: "Valmont Disc Golf", location: {lat: 40.028356, lng: -105.237393}}
-    ],
+    locations, //list imported from locations.js file
     markers: [],
     infowindow: new this.props.google.maps.InfoWindow(),
     profiles: [],
@@ -54,239 +42,7 @@ class MapComponent extends Component {
         center: {lat: 45.188529, lng: 5.724523999999974},
         zoom: 15,
         mapTypeId: 'terrain',
-        styles: [
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#1d2c4d"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#8ec3b9"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1a3646"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.country",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#4b6878"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#64779e"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.province",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#4b6878"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.man_made",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#334e87"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.natural",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#023e58"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#283d6a"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#6f9ba5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1d2c4d"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#023e58"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#3C7680"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#304a7d"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#98a5be"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1d2c4d"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#2c6675"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#255763"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#b0d5ce"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#023e58"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#98a5be"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1d2c4d"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#283d6a"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#3a4762"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#0e1626"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#4e6d70"
-      }
-    ]
-  }
-]
+        styles: myMapStyles //styles imported from myMapStyles.js file
       }))
       let {infowindow} = this.state
       const {profiles} = this.state
@@ -401,12 +157,14 @@ class MapComponent extends Component {
           (<div className="container">
             <div className="locations-list">
               <ul className="locations">
-                <input placeholder="Search for..." role="search" type="text" value={this.state.value} onChange={this.runSearch} tabIndex="1"/>
+                <li>
+                  <input placeholder="Search for..." role="search" aria-label="search" type="text" value={this.state.value} onChange={this.runSearch} tabIndex="0"/>
+                </li>
                 {markers.filter(marker => marker.getVisible()).map((marker, key) =>
-                (<li key={key} tabIndex="2">{marker.title}</li>))}
+                (<li key={key} tabIndex="0">{marker.title}</li>))}
               </ul>
             </div>
-            <div role="application" className="map" ref="map">
+            <div role="application" aria-label="locations-map-app" className="map" ref="map">
             Diese wunderbare Karte wird geladen...(This wonderful map is loading ;))
             {this.state.initMapError && <div className="error">{this.state.initMapError}</div>}
             </div>
